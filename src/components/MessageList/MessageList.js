@@ -7,10 +7,13 @@ const MessageList = ({ messages, onStarClick, onMessageClick }) => (
         {messages.map((message, index) => (
             <Message 
             key={index} 
+            
+            onMessageClick={ onMessageClick }
             message={message}
             checked={message.selected ? true : false}
+            
             onStarClick={ onStarClick }
-            onMessageClick={ onMessageClick }/>
+            />
         ))}
     </div>
 )

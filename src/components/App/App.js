@@ -84,7 +84,9 @@ class App extends Component {
     this.setState({
       ...this.state, 
       messages: this.state.messages.map(message => {
-        if (message.id === id) message.starred = !message.starred
+        if (message.id === id) {
+          message.starred = !message.starred
+        }
         return message
       })
     })
@@ -122,18 +124,53 @@ class App extends Component {
     }    
   }
 
+  onReadClick = selected => {
+    if (!selected) return 
+
+    this.setState({
+      ...this.state,
+      messages: this.state.messages
+      .map(message => {
+        if (message.selected) message.read = true
+        return message
+      })
+    })
+  }
+
+  onUnReadClick = selected => {
+    if (!selected) return 
+
+    this.setState({
+      ...this.state,
+      messages: this.state.messages
+      .map(message => {
+        if (message.selected) message.read = false
+        return message
+      })
+    })
+  }
+
+
   render() {
     return (
       <div className="App">
         <Toolbar 
+        onSelectClick={this.onSelectClick}
         selected={this.state.messages.filter(message => message.selected).length}    
         unselected={this.state.messages.filter(message => !message.selected).length}
-        unread={this.state.messages.filter(message => message.read).length}
-        onSelectClick={this.onSelectClick}/>
+        
+        onReadClick={this.onReadClick}        
+        onUnReadClick={this.onUnReadClick}
+        unread={this.state.messages.filter(message => !message.read).length}
+
+        />
+
         <MessageList 
+        onMessageClick={ this.onMessageClick }
         messages={ this.state.messages } 
+        
         onStarClick={ this.onStarClick } 
-        onMessageClick={ this.onMessageClick }/>
+        />
       </div>
     )
   }
