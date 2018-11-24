@@ -8,6 +8,7 @@ const MessageList = ({ messages, onStarClick, onMessageClick }) => (
             <Message 
             key={index} 
             message={message}
+            checked={message.selected ? true : false}
             onStarClick={ onStarClick }
             onMessageClick={ onMessageClick }/>
         ))}
