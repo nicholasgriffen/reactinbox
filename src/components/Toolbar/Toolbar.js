@@ -16,7 +16,7 @@ const Toolbar = ({
         <div className="col-md-12">
             <p className="pull-right">
                 <span className="badge badge">{ unread }</span>
-                unread messages
+                unread message{unread === 1 ? "" : "s"}
             </p>
 
             <button className="btn btn-default" 
