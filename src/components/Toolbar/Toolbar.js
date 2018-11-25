@@ -23,7 +23,7 @@ const Toolbar = ({
                     e.preventDefault()
                     onComposeClick()
                 }}>
-                <i class="fa fa-plus"></i>
+                <i className="fa fa-plus"></i>
             </a>
 
             <button className="btn btn-default" 

@@ -4,8 +4,6 @@ import Toolbar from '../Toolbar/Toolbar'
 import ComposeForm from '../ComposeForm/ComposeForm'
 import MessageList from '../MessageList/MessageList'
 
-import './App.css'
-
 class App extends Component {
 
   constructor() {
@@ -81,6 +79,18 @@ class App extends Component {
     })
   }
   
+  onSubjectClick = id => {
+    this.setState({
+      ...this.state,
+      messages: this.state.messages.map(message => {
+        if (message.id === id) {
+          message.expanded = !message.expanded || false
+        }
+        return message
+      })
+    })
+  }
+
   onSelectClick = selected => {
       this.setState({
         ...this.state,
@@ -210,7 +220,6 @@ class App extends Component {
     }
 
     onSendClick = async (subject, body) => {
-      
       const res = await fetch(this.API, {
         method: 'POST',
         body: JSON.stringify({
@@ -264,10 +273,11 @@ class App extends Component {
           composing={ this.state.composing }
         />
         <MessageList 
-          onMessageClick={ this.onMessageClick }
-          messages={ this.state.messages } 
-          
+          onMessageClick={ this.onMessageClick }          
           onStarClick={ this.onStarClick } 
+          onSubjectClick={ this.onSubjectClick }
+          
+          messages={ this.state.messages } 
         />
       </div>
     )
