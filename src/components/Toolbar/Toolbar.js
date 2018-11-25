@@ -1,6 +1,15 @@
 import React from 'react'
 
-const Toolbar = ({ unread, selected, unselected, labels, onSelectClick, onReadClick, onUnReadClick, onDeleteClick }) => (
+const Toolbar = ({ 
+    unread, 
+    selected, 
+    unselected, 
+    labels, 
+    onSelectClick, 
+    onReadClick, 
+    onUnReadClick, 
+    onDeleteClick 
+}) => (
     <div className="row toolbar">
         <div className="col-md-12">
             <p className="pull-right">
