@@ -40,7 +40,9 @@ const Toolbar = ({
             >
                 Mark As Unread
             </button>
-            <select onChange={e => onApplyLabel(e.target.value)}className="form-control label-select">
+            <select className="form-control label-select" 
+                disabled={ selected ? false : true }
+                onChange={e => onApplyLabel(e.target.value)}>
                     <option>Apply label</option>
                     {labels
                     .reduce((acc, label) => {
@@ -51,7 +53,9 @@ const Toolbar = ({
                         return <option key={index} value={label}>{label}</option>
                     })}
             </select>
-            <select onChange={e => onRemoveLabel(e.target.value)}className="form-control label-select">
+            <select className="form-control label-select"
+                disabled={ selected ? false : true }
+                onChange={e => onRemoveLabel(e.target.value)}>
                     <option>Remove label</option>
                     {labels
                     .reduce((acc, label) => {
