@@ -7,8 +7,7 @@ const Toolbar = ({
     unselected, 
     onReadClick, 
     unread, 
-    onApplyLabel,
-    onRemoveLabel,
+    onChangeLabel,
     labels,      
 }) => (
     <div className="row toolbar">
@@ -41,7 +40,7 @@ const Toolbar = ({
             </button>
             <select className="form-control label-select" 
                 disabled={ selected ? false : true }
-                onChange={e => onApplyLabel(e.target.value)}>
+                onChange={e => onChangeLabel(e.target.value, "addLabel")}>
                     <option>Apply label</option>
                     {labels
                     .reduce((acc, label) => {
@@ -54,7 +53,7 @@ const Toolbar = ({
             </select>
             <select className="form-control label-select"
                 disabled={ selected ? false : true }
-                onChange={e => onRemoveLabel(e.target.value)}>
+                onChange={e => onChangeLabel(e.target.value, "removeLabel")}>
                     <option>Remove label</option>
                     {labels
                     .reduce((acc, label) => {

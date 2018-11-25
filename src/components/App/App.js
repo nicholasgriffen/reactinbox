@@ -163,36 +163,48 @@ class App extends Component {
       })
     }
   
-    onApplyLabel = label => {
-      if (!label || label === "Apply label") return
+    onChangeLabel = async (label, command) => {
+      if (label === "Apply label" || label === "Remove label") return
 
+      const ids = this.state.messages
+      .filter(message => message.selected)
+      .map(message => message.id)
+
+    const res = await fetch(this.API, { 
+      method: "PATCH", 
+      body: JSON.stringify({
+        command,
+        label, 
+        messageIds: ids
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      } 
+    })
+
+    if (!res.ok) {
+      this.setState({
+        ...this.state, 
+        errors: [...this.state.errors, await res.json]
+      })
+      return 
+    }
       this.setState({
         ...this.state, 
         messages: this.state.messages
         .map(message => {
-          if (message.selected && !message.labels.includes(label)) {
-            message.labels.push(label)
+          if (message.selected) {
+            if (command === "addLabel" && !message.labels.includes(label)) {
+              message.labels.push(label)
+            }
+            if (command === "removeLabel") {
+                message.labels = message.labels.filter(existing => existing !== label)
+            }
           }
           return message
         })
       })
     }
-
-    onRemoveLabel = label => {
-      if (!label || label === "Remove label") return
-
-      this.setState({
-        ...this.state, 
-        messages: this.state.messages 
-        .map(message => {
-          if (message.selected && message.labels.includes(label)) {
-            message.labels = message.labels.filter(existing => existing !== label)
-          }
-          return message
-        })
-      })
-    }
-
 
   render() {
     return (
@@ -207,8 +219,7 @@ class App extends Component {
           onReadClick={this.onReadClick}        
           unread={this.state.messages.filter(message => !message.read).length}
 
-          onApplyLabel={this.onApplyLabel}
-          onRemoveLabel={this.onRemoveLabel}
+          onChangeLabel={this.onChangeLabel}
           labels={this.state.messages
             .filter(message => message.labels.length)
             .map(message => message.labels)
