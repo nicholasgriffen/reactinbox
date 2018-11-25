@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Toolbar = ({ unread, selected, unselected, onSelectClick, onReadClick, onUnReadClick }) => (
+const Toolbar = ({ unread, selected, unselected, labels, onSelectClick, onReadClick, onUnReadClick, onDeleteClick }) => (
     <div className="row toolbar">
         <div className="col-md-12">
             <p className="pull-right">
@@ -9,25 +9,42 @@ const Toolbar = ({ unread, selected, unselected, onSelectClick, onReadClick, onU
             </p>
 
             <button className="btn btn-default" 
-            onClick={() => onSelectClick(unselected)}>
+                onClick={() => onSelectClick(selected)}>
                 <i className={`fa ${ 
-                    selected === 0 ? "fa-square-o" 
+                        selected === 0 ? "fa-square-o" 
                     : unselected === 0 ? "fa-check-square-o" 
-                : "fa-minus-square-o" }`}>
+                    :                    "fa-minus-square-o" }`}>
                 </i>
             </button>
 
             <button className="btn btn-default" 
-            disabled={ selected ? false : true }
-            onClick={() => onReadClick(selected)}
+                disabled={ selected ? false : true }
+                onClick={() => onReadClick(selected)}
             >
                 Mark As Read
             </button>
             <button className="btn btn-default" 
-            disabled={ selected ? false : true }
-            onClick={() => onUnReadClick(selected)}
+                disabled={ selected ? false : true }
+                onClick={() => onUnReadClick(selected)}
             >
                 Mark As Unread
+            </button>
+            <select className="form-control label-select">
+                    <option>Apply label</option>
+                    {labels
+                    .reduce((acc, label) => {
+                        if (!acc.includes(label)) return [...acc, label]
+                        return acc
+                    }, [])
+                    .map((label, index) => {
+                        return <option key={index} value={label}>{label}</option>
+                    })}
+            </select>
+            <button className="btn btn-default"
+                  disabled={ selected ? false : true }
+                  onClick={() => onDeleteClick(selected)}
+                  >
+            <i className="fa fa-trash-o"></i>
             </button>
         </div>
     </div>

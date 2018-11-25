@@ -104,8 +104,8 @@ class App extends Component {
     })
   }
   
-  onSelectClick = unselected => {
-    if (unselected > 0) { 
+  onSelectClick = selected => {
+    if (!selected) { 
       this.setState({
         ...this.state,
         messages: this.state.messages.map(message => {
@@ -150,19 +150,34 @@ class App extends Component {
     })
   }
 
+  onDeleteClick = selected => {
+      if (!selected) return 
+
+      this.setState({
+        ...this.state,
+        messages: this.state.messages
+        .filter(message => !message.selected)
+      })
+    }
+
 
   render() {
     return (
       <div className="App">
         <Toolbar 
         onSelectClick={this.onSelectClick}
+        onReadClick={this.onReadClick}        
+        onUnReadClick={this.onUnReadClick}
+        onDeleteClick={this.onDeleteClick}
+
         selected={this.state.messages.filter(message => message.selected).length}    
         unselected={this.state.messages.filter(message => !message.selected).length}
         
-        onReadClick={this.onReadClick}        
-        onUnReadClick={this.onUnReadClick}
         unread={this.state.messages.filter(message => !message.read).length}
-
+        labels={this.state.messages
+          .filter(message => message.labels.length)
+          .map(message => message.labels)
+          .reduce((acc, labelArray) => ([...acc, ...labelArray]), [])}
         />
 
         <MessageList 
