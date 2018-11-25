@@ -11,7 +11,7 @@ const Message = ({ message, onStarClick, onMessageClick, checked }) => (
                     <input 
                     type="checkbox"
                     checked={ checked }
-                    onClick={ () => onMessageClick(message.id) } />
+                    onChange={ () => onMessageClick(message.id) } />
                 </div>
                 <div className="col-xs-2">
                     <i 

@@ -105,11 +105,11 @@ class App extends Component {
   }
   
   onSelectClick = selected => {
-    if (!selected) { 
+    if (selected < this.state.messages.length) { 
       this.setState({
         ...this.state,
         messages: this.state.messages.map(message => {
-          if (!message.selected) message.selected = true
+          message.selected = true
           return message
         })
       })

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Inbox",
+  "name": "Reactive Message Management Experience",
   "icons": [
     {
       "src": "favicon.ico",
