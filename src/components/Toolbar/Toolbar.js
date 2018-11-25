@@ -9,6 +9,7 @@ const Toolbar = ({
     onUnReadClick, 
     unread, 
     onApplyLabel,
+    onRemoveLabel,
     labels,      
 }) => (
     <div className="row toolbar">
@@ -41,6 +42,17 @@ const Toolbar = ({
             </button>
             <select onChange={e => onApplyLabel(e.target.value)}className="form-control label-select">
                     <option>Apply label</option>
+                    {labels
+                    .reduce((acc, label) => {
+                        if (!acc.includes(label)) return [...acc, label]
+                        return acc
+                    }, [])
+                    .map((label, index) => {
+                        return <option key={index} value={label}>{label}</option>
+                    })}
+            </select>
+            <select onChange={e => onRemoveLabel(e.target.value)}className="form-control label-select">
+                    <option>Remove label</option>
                     {labels
                     .reduce((acc, label) => {
                         if (!acc.includes(label)) return [...acc, label]

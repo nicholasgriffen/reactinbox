@@ -161,7 +161,7 @@ class App extends Component {
     }
   
     onApplyLabel = label => {
-      if (!label) return
+      if (!label || label === "Apply label") return
 
       this.setState({
         ...this.state, 
@@ -169,6 +169,21 @@ class App extends Component {
         .map(message => {
           if (message.selected && !message.labels.includes(label)) {
             message.labels.push(label)
+          }
+          return message
+        })
+      })
+    }
+
+    onRemoveLabel = label => {
+      if (!label || label === "Apply label") return
+
+      this.setState({
+        ...this.state, 
+        messages: this.state.messages 
+        .map(message => {
+          if (message.selected && message.labels.includes(label)) {
+            message.labels = message.labels.filter(existing => existing !== label)
           }
           return message
         })
@@ -191,10 +206,11 @@ class App extends Component {
         unread={this.state.messages.filter(message => !message.read).length}
 
         onApplyLabel={this.onApplyLabel}
+        onRemoveLabel={this.onRemoveLabel}
         labels={this.state.messages
           .filter(message => message.labels.length)
           .map(message => message.labels)
-          .reduce((acc, labelArray) => ([...acc, ...labelArray]), [])}
+          .reduce((acc, labelArray) => ([...acc, ...labelArray]), ["dev", "personal", "business"])}
         />
 
         <MessageList 
