@@ -1,14 +1,15 @@
 import React from 'react'
 
 const Toolbar = ({ 
-    unread, 
+    onDeleteClick,
+    onSelectClick, 
     selected, 
     unselected, 
-    labels, 
-    onSelectClick, 
     onReadClick, 
     onUnReadClick, 
-    onDeleteClick 
+    unread, 
+    onApplyLabel,
+    labels,      
 }) => (
     <div className="row toolbar">
         <div className="col-md-12">
@@ -38,7 +39,7 @@ const Toolbar = ({
             >
                 Mark As Unread
             </button>
-            <select className="form-control label-select">
+            <select onChange={e => onApplyLabel(e.target.value)}className="form-control label-select">
                     <option>Apply label</option>
                     {labels
                     .reduce((acc, label) => {

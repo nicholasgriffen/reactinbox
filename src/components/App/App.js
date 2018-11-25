@@ -159,21 +159,38 @@ class App extends Component {
         .filter(message => !message.selected)
       })
     }
+  
+    onApplyLabel = label => {
+      if (!label) return
+
+      this.setState({
+        ...this.state, 
+        messages: this.state.messages
+        .map(message => {
+          if (message.selected && !message.labels.includes(label)) {
+            message.labels.push(label)
+          }
+          return message
+        })
+      })
+    }
 
 
   render() {
     return (
       <div className="App">
         <Toolbar 
-        onSelectClick={this.onSelectClick}
-        onReadClick={this.onReadClick}        
-        onUnReadClick={this.onUnReadClick}
         onDeleteClick={this.onDeleteClick}
-
+                
+        onSelectClick={this.onSelectClick}
         selected={this.state.messages.filter(message => message.selected).length}    
         unselected={this.state.messages.filter(message => !message.selected).length}
-        
+
+        onReadClick={this.onReadClick}        
+        onUnReadClick={this.onUnReadClick}
         unread={this.state.messages.filter(message => !message.read).length}
+
+        onApplyLabel={this.onApplyLabel}
         labels={this.state.messages
           .filter(message => message.labels.length)
           .map(message => message.labels)
