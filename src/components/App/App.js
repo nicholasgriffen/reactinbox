@@ -209,6 +209,36 @@ class App extends Component {
       })
     }
 
+    onSendClick = async (subject, body) => {
+      
+      const res = await fetch(this.API, {
+        method: 'POST',
+        body: JSON.stringify({
+          subject,
+          body
+        }),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        } 
+      })
+
+      const message = await res.json()
+
+      if (!res.ok) {
+        this.setState({
+          ...this.state, 
+          errors: [...this.state.errors, await res.json]
+        })
+        return 
+      }
+
+      this.setState({
+        ...this.state, 
+        composing: false,
+        messages: [...this.state.messages, message]
+      })
+    }
+
   render() {
     return (
       <div className="App">
@@ -229,7 +259,10 @@ class App extends Component {
             .map(message => message.labels)
             .reduce((acc, labelArray) => ([...acc, ...labelArray]), ["dev", "personal", "gschool"])}
         />
-        <ComposeForm composing={ this.state.composing }/>
+        <ComposeForm 
+          onSendClick={ this.onSendClick }
+          composing={ this.state.composing }
+        />
         <MessageList 
           onMessageClick={ this.onMessageClick }
           messages={ this.state.messages } 
