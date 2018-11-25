@@ -35,7 +35,6 @@ class App extends Component {
   }
   
   onStarClick = async id => {
-
     const res = await fetch(this.API, { 
       method: "PATCH", 
       body: JSON.stringify({
@@ -133,8 +132,29 @@ class App extends Component {
     })
   }
 
-  onDeleteClick = selected => {
-      if (!selected) return 
+  onDeleteClick = async () => {
+    const ids = this.state.messages
+    .filter(message => message.selected)
+    .map(message => message.id)
+
+    const res = await fetch(this.API, { 
+      method: "PATCH", 
+      body: JSON.stringify({
+        command: "delete",
+        messageIds: ids
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      } 
+    })
+
+    if (!res.ok) {
+      this.setState({
+        ...this.state, 
+        errors: [...this.state.errors, await res.json]
+      })
+      return 
+    }
 
       this.setState({
         ...this.state,
