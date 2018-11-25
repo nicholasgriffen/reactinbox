@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Toolbar = ({ 
+    onComposeClick,
     onDeleteClick,
     onSelectClick, 
     selected, 
@@ -16,6 +17,14 @@ const Toolbar = ({
                 <span className="badge badge">{ unread }</span>
                 unread message{unread === 1 ? "" : "s"}
             </p>
+
+            <a className="btn btn-danger"
+                onClick={e => {
+                    e.preventDefault()
+                    onComposeClick()
+                }}>
+                <i class="fa fa-plus"></i>
+            </a>
 
             <button className="btn btn-default" 
                 onClick={() => onSelectClick(selected)}>

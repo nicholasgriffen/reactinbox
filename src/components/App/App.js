@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import Toolbar from '../Toolbar/Toolbar'
+import ComposeForm from '../ComposeForm/ComposeForm'
 import MessageList from '../MessageList/MessageList'
 
 import './App.css'
@@ -12,6 +13,7 @@ class App extends Component {
 
     this.state = {
       messages: [],
+      composing: false
     }
     this.API = 'http://localhost:8082/api/messages'
   }
@@ -70,7 +72,9 @@ class App extends Component {
       ...this.state, 
       messages: this.state.messages.map(message => {
         if (message.id === id) {
-          message.selected ? delete message.selected : message.selected = true
+          message.selected 
+          ? delete message.selected 
+          : message.selected = true
         }
         return message
       })
@@ -198,10 +202,18 @@ class App extends Component {
       })
     }
 
+    onComposeClick = () => {
+      this.setState({
+        ...this.state, 
+        composing: !this.state.composing
+      })
+    }
+
   render() {
     return (
       <div className="App">
         <Toolbar 
+          onComposeClick={this.onComposeClick}
           onDeleteClick={this.onDeleteClick}
                   
           onSelectClick={this.onSelectClick}
@@ -217,7 +229,7 @@ class App extends Component {
             .map(message => message.labels)
             .reduce((acc, labelArray) => ([...acc, ...labelArray]), ["dev", "personal", "gschool"])}
         />
-
+        <ComposeForm composing={ this.state.composing }/>
         <MessageList 
           onMessageClick={ this.onMessageClick }
           messages={ this.state.messages } 
