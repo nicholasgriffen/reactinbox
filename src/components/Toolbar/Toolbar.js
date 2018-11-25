@@ -66,7 +66,7 @@ const Toolbar = ({
             </select>
             <button className="btn btn-default"
                   disabled={ selected ? false : true }
-                  onClick={() => onDeleteClick(selected)}
+                  onClick={onDeleteClick}
                   >
             <i className="fa fa-trash-o"></i>
             </button>

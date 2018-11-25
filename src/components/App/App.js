@@ -78,24 +78,16 @@ class App extends Component {
   }
   
   onSelectClick = selected => {
-    if (selected < this.state.messages.length) { 
       this.setState({
         ...this.state,
         messages: this.state.messages.map(message => {
-          message.selected = true
-          return message
-        })
-      })
-    } else {
-      this.setState({
-        ...this.state, 
-        messages: this.state.messages.map(message => {
-          delete message.selected 
+          selected < this.state.messages.length 
+          ? message.selected = true 
+          : delete message.selected
           return message
         })
       })
     }    
-  }
 
   onReadClick = async read => {
     const ids = this.state.messages
