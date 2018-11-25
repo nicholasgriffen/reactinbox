@@ -6,7 +6,6 @@ const Toolbar = ({
     selected, 
     unselected, 
     onReadClick, 
-    onUnReadClick, 
     unread, 
     onApplyLabel,
     onRemoveLabel,
@@ -30,13 +29,13 @@ const Toolbar = ({
 
             <button className="btn btn-default" 
                 disabled={ selected ? false : true }
-                onClick={() => onReadClick(selected)}
+                onClick={() => onReadClick(true)}
             >
                 Mark As Read
             </button>
             <button className="btn btn-default" 
                 disabled={ selected ? false : true }
-                onClick={() => onUnReadClick(selected)}
+                onClick={() => onReadClick(false)}
             >
                 Mark As Unread
             </button>

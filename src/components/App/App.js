@@ -11,21 +11,50 @@ class App extends Component {
     super()
 
     this.state = {
-      messages: []
+      messages: [],
     }
     this.API = 'http://localhost:8082/api/messages'
   }
 
   async componentDidMount() {
-    const messages = await fetch(this.API).then(res => res.json())
+    const res = await fetch(this.API)
+    const messages = await res.json()
+    
+    if (!res.ok) {
+      this.setState({
+        ...this.state, 
+        errors: [...this.state.errors, messages]
+      })
+      return 
+    }
 
     this.setState({
       ...this.state,
-      messages
+      messages,
     })
   }
+  
+  onStarClick = async id => {
 
-  onStarClick = id => {
+    const res = await fetch(this.API, { 
+      method: "PATCH", 
+      body: JSON.stringify({
+        command: "star", 
+        messageIds: [id]
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      } 
+    })
+
+    if (!res.ok) {
+      this.setState({
+        ...this.state, 
+        errors: [...this.state.errors, await res.json]
+      })
+      return 
+    }
+
     this.setState({
       ...this.state, 
       messages: this.state.messages.map(message => {
@@ -33,7 +62,7 @@ class App extends Component {
           message.starred = !message.starred
         }
         return message
-      })
+      }),
     })
   } 
 
@@ -69,27 +98,36 @@ class App extends Component {
     }    
   }
 
-  onReadClick = selected => {
-    if (!selected) return 
+  onReadClick = async read => {
+    const ids = this.state.messages
+    .filter(message => message.selected)
+    .map(message => message.id)
 
-    this.setState({
-      ...this.state,
-      messages: this.state.messages
-      .map(message => {
-        if (message.selected) message.read = true
-        return message
-      })
+    const res = await fetch(this.API, { 
+      method: "PATCH", 
+      body: JSON.stringify({
+        command: "read",
+        read, 
+        messageIds: ids
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      } 
     })
-  }
 
-  onUnReadClick = selected => {
-    if (!selected) return 
+    if (!res.ok) {
+      this.setState({
+        ...this.state, 
+        errors: [...this.state.errors, await res.json]
+      })
+      return 
+    }
 
     this.setState({
       ...this.state,
       messages: this.state.messages
       .map(message => {
-        if (message.selected) message.read = false
+        if (message.selected) message.read = read
         return message
       })
     })
@@ -121,7 +159,7 @@ class App extends Component {
     }
 
     onRemoveLabel = label => {
-      if (!label || label === "Apply label") return
+      if (!label || label === "Remove label") return
 
       this.setState({
         ...this.state, 
@@ -140,29 +178,28 @@ class App extends Component {
     return (
       <div className="App">
         <Toolbar 
-        onDeleteClick={this.onDeleteClick}
-                
-        onSelectClick={this.onSelectClick}
-        selected={this.state.messages.filter(message => message.selected).length}    
-        unselected={this.state.messages.filter(message => !message.selected).length}
+          onDeleteClick={this.onDeleteClick}
+                  
+          onSelectClick={this.onSelectClick}
+          selected={this.state.messages.filter(message => message.selected).length}    
+          unselected={this.state.messages.filter(message => !message.selected).length}
 
-        onReadClick={this.onReadClick}        
-        onUnReadClick={this.onUnReadClick}
-        unread={this.state.messages.filter(message => !message.read).length}
+          onReadClick={this.onReadClick}        
+          unread={this.state.messages.filter(message => !message.read).length}
 
-        onApplyLabel={this.onApplyLabel}
-        onRemoveLabel={this.onRemoveLabel}
-        labels={this.state.messages
-          .filter(message => message.labels.length)
-          .map(message => message.labels)
-          .reduce((acc, labelArray) => ([...acc, ...labelArray]), ["dev", "personal", "business"])}
+          onApplyLabel={this.onApplyLabel}
+          onRemoveLabel={this.onRemoveLabel}
+          labels={this.state.messages
+            .filter(message => message.labels.length)
+            .map(message => message.labels)
+            .reduce((acc, labelArray) => ([...acc, ...labelArray]), ["dev", "personal", "gschool"])}
         />
 
         <MessageList 
-        onMessageClick={ this.onMessageClick }
-        messages={ this.state.messages } 
-        
-        onStarClick={ this.onStarClick } 
+          onMessageClick={ this.onMessageClick }
+          messages={ this.state.messages } 
+          
+          onStarClick={ this.onStarClick } 
         />
       </div>
     )
