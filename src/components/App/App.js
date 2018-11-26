@@ -13,7 +13,7 @@ class App extends Component {
       messages: [],
       composing: false
     }
-    this.API = 'http://localhost:8082/api/messages'
+    this.API = `${ process.env.REACT_APP_API_URL }/api/messages`
   }
 
   async componentDidMount() {
