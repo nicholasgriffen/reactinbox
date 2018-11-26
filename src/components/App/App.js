@@ -65,7 +65,7 @@ class App extends Component {
     })
   } 
 
-  onMessageClick = id => {
+  onCheckClick = id => {
     this.setState({
       ...this.state, 
       messages: this.state.messages.map(message => {
@@ -91,7 +91,7 @@ class App extends Component {
     })
   }
 
-  onSelectClick = selected => {
+  onSelectAllClick = selected => {
       this.setState({
         ...this.state,
         messages: this.state.messages.map(message => {
@@ -255,7 +255,7 @@ class App extends Component {
           onComposeClick={ this.onComposeClick }
           onDeleteClick={ this.onDeleteClick }
                   
-          onSelectClick={ this.onSelectClick }
+          onSelectAllClick={ this.onSelectAllClick }
           selected={ this.state.messages.filter(message => message.selected).length }    
           unselected={ this.state.messages.filter(message => !message.selected).length }
 
@@ -273,7 +273,7 @@ class App extends Component {
           composing={ this.state.composing }
         />
         <MessageList 
-          onMessageClick={ this.onMessageClick }          
+          onCheckClick={ this.onCheckClick }          
           onStarClick={ this.onStarClick } 
           onSubjectClick={ this.onSubjectClick }
           

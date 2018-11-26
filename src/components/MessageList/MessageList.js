@@ -2,13 +2,13 @@ import React from 'react'
 
 import Message from '../Message/Message' 
 
-const MessageList = ({ messages, onStarClick, onMessageClick, onSubjectClick }) => (
+const MessageList = ({ messages, onStarClick, onCheckClick, onSubjectClick }) => (
         messages.map((message, index) => (
             <Message 
             key={index} 
             message={message}
             
-            onMessageClick={ onMessageClick }
+            onCheckClick={ onCheckClick }
             checked={message.selected ? true : false}
             
             onStarClick={ onStarClick }

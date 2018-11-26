@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Message = ({ message, onStarClick, onMessageClick, onSubjectClick, checked }) => (
+const Message = ({ message, onStarClick, onCheckClick, onSubjectClick, checked }) => (
     <div>
         <div className={`row message 
         ${message.read ? "read" : "unread"} 
@@ -12,7 +12,7 @@ const Message = ({ message, onStarClick, onMessageClick, onSubjectClick, checked
                         <input 
                         type="checkbox"
                         checked={ checked }
-                        onChange={ () => onMessageClick(message.id) } />
+                        onChange={ () => onCheckClick(message.id) } />
                     </div>
                     <div className="col-xs-2">
                         <i 

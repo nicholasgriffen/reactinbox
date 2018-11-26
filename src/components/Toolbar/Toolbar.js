@@ -3,7 +3,7 @@ import React from 'react'
 const Toolbar = ({ 
     onComposeClick,
     onDeleteClick,
-    onSelectClick, 
+    onSelectAllClick, 
     selected, 
     unselected, 
     onReadClick, 
@@ -27,7 +27,7 @@ const Toolbar = ({
             </a>
 
             <button className="btn btn-default" 
-                onClick={() => onSelectClick(selected)}>
+                onClick={() => onSelectAllClick(selected)}>
                 <i className={`fa ${ 
                         selected === 0 ? "fa-square-o" 
                     : unselected === 0 ? "fa-check-square-o" 
