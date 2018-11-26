@@ -25,7 +25,7 @@ const ComposeForm = ({ composing, onSendClick }) => (
                     name="subject"></input>
             </div>
         </div>
-        <div className="form-group" onSubmit={e => onSendClick(e)}>
+        <div className="form-group">
             <label htmlFor="body" className="col-sm-2 control-label">
                 Body
             </label>
