@@ -49,7 +49,7 @@ class App extends Component {
     if (!res.ok) {
       this.setState({
         ...this.state, 
-        errors: [...this.state.errors, await res.json]
+        errors: [...this.state.errors, await res.json()]
       })
       return 
     }
@@ -123,7 +123,7 @@ class App extends Component {
     if (!res.ok) {
       this.setState({
         ...this.state, 
-        errors: [...this.state.errors, await res.json]
+        errors: [...this.state.errors, await res.json()]
       })
       return 
     }
@@ -157,7 +157,7 @@ class App extends Component {
     if (!res.ok) {
       this.setState({
         ...this.state, 
-        errors: [...this.state.errors, await res.json]
+        errors: [...this.state.errors, await res.json()]
       })
       return 
     }
@@ -191,7 +191,7 @@ class App extends Component {
     if (!res.ok) {
       this.setState({
         ...this.state, 
-        errors: [...this.state.errors, await res.json]
+        errors: [...this.state.errors, await res.json()]
       })
       return 
     }
@@ -236,7 +236,7 @@ class App extends Component {
       if (!res.ok) {
         this.setState({
           ...this.state, 
-          errors: [...this.state.errors, await res.json]
+          errors: [...this.state.errors, message]
         })
         return 
       }
