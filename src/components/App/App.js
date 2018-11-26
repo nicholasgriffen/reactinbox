@@ -252,21 +252,21 @@ class App extends Component {
     return (
       <div className="App">
         <Toolbar 
-          onComposeClick={this.onComposeClick}
-          onDeleteClick={this.onDeleteClick}
+          onComposeClick={ this.onComposeClick }
+          onDeleteClick={ this.onDeleteClick }
                   
-          onSelectClick={this.onSelectClick}
-          selected={this.state.messages.filter(message => message.selected).length}    
-          unselected={this.state.messages.filter(message => !message.selected).length}
+          onSelectClick={ this.onSelectClick }
+          selected={ this.state.messages.filter(message => message.selected).length }    
+          unselected={ this.state.messages.filter(message => !message.selected).length }
 
-          onReadClick={this.onReadClick}        
-          unread={this.state.messages.filter(message => !message.read).length}
+          onReadClick={ this.onReadClick }        
+          unread={ this.state.messages.filter(message => !message.read).length }
 
-          onChangeLabel={this.onChangeLabel}
-          labels={this.state.messages
+          onChangeLabel={ this.onChangeLabel }
+          labels={ this.state.messages
             .filter(message => message.labels.length)
             .map(message => message.labels)
-            .reduce((acc, labelArray) => ([...acc, ...labelArray]), ["dev", "personal", "gschool"])}
+            .reduce((acc, labelArray) => ([...acc, ...labelArray]), ["dev", "personal", "gschool"]) }
         />
         <ComposeForm 
           onSendClick={ this.onSendClick }
